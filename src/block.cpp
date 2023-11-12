@@ -90,9 +90,22 @@ void Block::activateBlock() {
  * Stellwerk einfach ignoriert.
  */
 void Block::doBlock() {
+  m_isRedState = !m_isInbound; // DC nach Weiß bei Einfahrt und nach Rot bei Ausfahrt
   m_acIn->lock();
   m_tickerBlock->startTicker();
   m_blockDoStart = true;
+}
+
+/**
+ * @brief Meldet zurück in welchem Zustand sich der Block befindet
+ * 
+ * Rot: true
+ * Weiss: false
+ * 
+ * @return boolean 
+ */
+boolean Block::getState() {
+  return m_isRedState;
 }
 
 /**
@@ -187,7 +200,6 @@ void Block::checkInput(long time) {
     bool triggerBlockRemote = m_dcIn->checkTrigger(time, actVal);
     if (triggerBlockRemote) {
       Serial.println("Button triggered");
-      m_isRedState = !m_isInbound; // DC nach Weiß bei Einfahrt und nach Rot bei Ausfahrt
       this->doBlock();
     }
 

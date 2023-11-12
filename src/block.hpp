@@ -12,6 +12,7 @@ class Block {
     void activateBlock();
     void doBlock();
     void setTickerBlock(Block *tickerBlock);
+    boolean getState();
 
   private:
     const uint8_t c_tickerMask = 0x10;
